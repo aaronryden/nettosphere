@@ -422,6 +422,8 @@ public class BridgeRuntime extends HttpStaticFileServerHandler {
 
         // Check for closing frame
         Object attachment = ctx.getChannel().getAttachment();
+        final WebSocket ws = (WebSocket) attachment;
+        ws.setRemoteAddress(messageEvent.getRemoteAddress());
         if (frame instanceof CloseWebSocketFrame) {
             ctx.getChannel().write(frame).addListener(ChannelFutureListener.CLOSE);
         } else if (frame instanceof PingWebSocketFrame) {
